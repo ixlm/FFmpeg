@@ -76,6 +76,7 @@ static int query_formats(AVFilterContext *ctx)
         AV_PIX_FMT_YUV420P16, AV_PIX_FMT_YUV422P16, AV_PIX_FMT_YUV444P16,
         AV_PIX_FMT_YUVA420P9, AV_PIX_FMT_YUVA422P9, AV_PIX_FMT_YUVA444P9,
         AV_PIX_FMT_YUVA420P10, AV_PIX_FMT_YUVA422P10, AV_PIX_FMT_YUVA444P10,
+        AV_PIX_FMT_YUVA422P12, AV_PIX_FMT_YUVA444P12,
         AV_PIX_FMT_YUVA420P16, AV_PIX_FMT_YUVA422P16, AV_PIX_FMT_YUVA444P16,
         AV_PIX_FMT_GBRP, AV_PIX_FMT_GBRP9, AV_PIX_FMT_GBRP10,
         AV_PIX_FMT_GBRP12, AV_PIX_FMT_GBRP14, AV_PIX_FMT_GBRP16,
@@ -284,14 +285,14 @@ static int config_output(AVFilterLink *outlink)
     if (s->depth <= 8 && s->filter == WEAK) {
         s->deblockh = deblockh8_weak;
         s->deblockv = deblockv8_weak;
-    } else if (s->depth >= 8 && s->filter == WEAK) {
+    } else if (s->depth > 8 && s->filter == WEAK) {
         s->deblockh = deblockh16_weak;
         s->deblockv = deblockv16_weak;
     }
     if (s->depth <= 8 && s->filter == STRONG) {
         s->deblockh = deblockh8_strong;
         s->deblockv = deblockv8_strong;
-    } else if (s->depth >= 8 && s->filter == STRONG) {
+    } else if (s->depth > 8 && s->filter == STRONG) {
         s->deblockh = deblockh16_strong;
         s->deblockv = deblockv16_strong;
     }
